@@ -41,6 +41,20 @@ if st.button('Buscar'):
         # Converter os dados da resposta para JSON
         data = response.json()
         jobs = data['results']
+        
+        # Analisar as habilidades mais requisitadas nas descrições das vagas
+        descriptions = ' '.join([job["description"] for job in jobs])
+        tokens = nltk.word_tokenize(descriptions)
+        tokens = [token.lower() for token in tokens if token.isalpha()]
+        stop_words = set(stopwords.words('english'))
+        tokens = [token for token in tokens if token not in stop_words]
+        token_counts = Counter(tokens)
+        most_common_tokens = dict(token_counts.most_common(50))
+        wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(most_common_tokens)
+        fig, ax = plt.subplots()
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        st.pyplot(fig) 
 
         # Exibir as vagas de emprego
         for i, job in enumerate(jobs):
@@ -62,16 +76,4 @@ if st.button('Buscar'):
         st.header(f'Cidades com mais Vagas de desenvolvedor {description}')
         st.pyplot(fig)
 
-        # Analisar as habilidades mais requisitadas nas descrições das vagas
-        descriptions = ' '.join([job["description"] for job in jobs])
-        tokens = nltk.word_tokenize(descriptions)
-        tokens = [token.lower() for token in tokens if token.isalpha()]
-        stop_words = set(stopwords.words('english'))
-        tokens = [token for token in tokens if token not in stop_words]
-        token_counts = Counter(tokens)
-        most_common_tokens = dict(token_counts.most_common(50))
-        wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(most_common_tokens)
-        fig, ax = plt.subplots()
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        st.pyplot(fig)
+        
