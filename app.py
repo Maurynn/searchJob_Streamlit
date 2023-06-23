@@ -31,7 +31,7 @@ if st.button('Buscar'):
 
 # Este botão será ativado quando o número da página mudar
 if st.button('Mostrar mais'):
-    page_number.number_input('Página', min_value=1, value=page_number.number_input + 1, step=1)
+    page_number.number_input('Página', min_value=1, value=page_number.number_input() + 1, step=1)
 
 params = {
     'app_id': APP_ID,
@@ -42,8 +42,7 @@ params = {
 }
 
 # Fazer a requisição para a API do Adzuna com os parâmetros de busca
-response = requests.get(API_URL, params=params)
-
+response = requests.get(API_URL.format(country='gb', page=page_number.number_input()), params=params)
     # Verificar se a requisição foi bem-sucedida
 if response.status_code == 200:
         # Converter os dados da resposta para JSON
