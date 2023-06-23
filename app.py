@@ -37,11 +37,11 @@ if st.button('Buscar'):
         # Exibir as vagas de emprego
         for i, job in enumerate(jobs):
             
-            # Criar uma seção expansível para cada vaga de emprego
+             # Criar uma seção expansível para cada vaga de emprego
             with st.expander(job["title"], expanded=False):
+                # Verificar se a vaga possui informações da empresa
                 if 'company' in job and 'display_name' in job['company']:
-                st.subheader(f"Empresa: {job['company']['display_name']}")
-                st.subheader(f"Empresa: {job['company']['display_name']}")
+                    st.subheader(f"Empresa: {job['company']['display_name']}")
                 st.text(f"Localização: {job['location']['display_name']}")
                 st.text(job["description"])  # A descrição da vaga
                 st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
