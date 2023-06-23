@@ -61,12 +61,4 @@ for job in st.session_state.saved_jobs:
     st.sidebar.subheader(job['title'])
     st.sidebar.write(job['company']['display_name'])
     st.sidebar.write(job['location']['display_name'])
-    st.sidebar.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
-
-
-
-
-
- "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
-    API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
-    APP_ID = "d0210377" # substitua pelo seu 
+    st.sidebar.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})") 
