@@ -45,10 +45,10 @@ params = {
 response = requests.get(API_URL, params=params)
 
     # Verificar se a requisição foi bem-sucedida
-    if response.status_code == 200:
+if response.status_code == 200:
         # Converter os dados da resposta para JSON
-        data = response.json()
-        jobs = data['results']
+    data = response.json()
+    jobs = data['results']
         
         # Analisar as habilidades mais requisitadas nas descrições das vagas
         descriptions = ' '.join([job["description"] for job in jobs])
