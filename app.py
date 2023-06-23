@@ -63,10 +63,3 @@ elif st.sidebar.button('Buscar'):
                 if st.button(save_button_text, key=f'save_button_{i}'):
                     # Adicionar a vaga aos favoritos
                     st.session_state.saved_jobs.append(job)
-
-
-
-    API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
-    APP_ID = "d0210377" # substitua pelo seu App ID
-
-   
