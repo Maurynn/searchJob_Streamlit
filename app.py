@@ -51,37 +51,37 @@ if response.status_code == 200:
     jobs = data['results']
         
         # Analisar as habilidades mais requisitadas nas descrições das vagas
-        descriptions = ' '.join([job["description"] for job in jobs])
-        tokens = nltk.word_tokenize(descriptions)
-        tokens = [token.lower() for token in tokens if token.isalpha()]
-        stop_words = set(stopwords.words('english'))
-        tokens = [token for token in tokens if token not in stop_words]
-        token_counts = Counter(tokens)
-        most_common_tokens = dict(token_counts.most_common(50))
-        wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(most_common_tokens)
-        fig, ax = plt.subplots()
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        st.pyplot(fig) 
+    descriptions = ' '.join([job["description"] for job in jobs])
+    tokens = nltk.word_tokenize(descriptions)
+    tokens = [token.lower() for token in tokens if token.isalpha()]
+    stop_words = set(stopwords.words('english'))
+    tokens = [token for token in tokens if token not in stop_words]
+    token_counts = Counter(tokens)
+    most_common_tokens = dict(token_counts.most_common(50))
+    wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(most_common_tokens)
+    fig, ax = plt.subplots()
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    st.pyplot(fig) 
 
         # Exibir as vagas de emprego
-        for i, job in enumerate(jobs):
+    for i, job in enumerate(jobs):
             # Criar uma seção expansível para cada vaga de emprego
-            with st.expander(job["title"], expanded=False):
+        with st.expander(job["title"], expanded=False):
                 # Verificar se a vaga possui informações da empresa
-                if 'company' in job and 'display_name' in job['company']:
-                    st.subheader(f"Empresa: {job['company']['display_name']}")
-                st.write(f"Localização: {job['location']['display_name']}")
-                st.write(job["description"])  # A descrição da vaga
-                st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
+            if 'company' in job and 'display_name' in job['company']:
+                st.subheader(f"Empresa: {job['company']['display_name']}")
+            st.write(f"Localização: {job['location']['display_name']}")
+            st.write(job["description"])  # A descrição da vaga
+            st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
 
         # Analisar a distribuição das vagas por localização
-        locations = [job['location']['display_name'] for job in jobs]
-        location_counts = Counter(locations)
-        fig, ax = plt.subplots()
-        ax.bar(location_counts.keys(), location_counts.values())
-        plt.xticks(rotation=90)
-        st.header(f'Cidades com mais Vagas de desenvolvedor {description}')
-        st.pyplot(fig)
+    locations = [job['location']['display_name'] for job in jobs]
+    location_counts = Counter(locations)
+    fig, ax = plt.subplots()
+    ax.bar(location_counts.keys(), location_counts.values())
+    plt.xticks(rotation=90)
+    st.header(f'Cidades com mais Vagas de desenvolvedor {description}')
+    st.pyplot(fig)
 
         
