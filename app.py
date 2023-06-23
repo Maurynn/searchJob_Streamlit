@@ -69,7 +69,7 @@ if st.sidebar.button('Buscar'):
                 save_button_text = "Salvar vaga"
             
             # Criar uma seção expansível para cada vaga de emprego
-            with st.beta_expander(job["title"], expanded=True):
+            with st.expander(job["title"], expanded=True):
                 st.subheader(f"Empresa: {job['company']['display_name']}")
                 st.text(f"Localização: {job['location']['display_name']}")
                 st.text(job["description"])  # A descrição da vaga
