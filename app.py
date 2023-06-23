@@ -43,6 +43,6 @@ if st.button('Buscar'):
                 if 'company' in job and 'display_name' in job['company']:
                     st.subheader(f"Empresa: {job['company']['display_name']}")
                 st.text(f"Localização: {job['location']['display_name']}")
-                st.text(job["description"])  # A descrição da vaga
+                st.write(job["description"])  # A descrição da vaga
                 st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
   
