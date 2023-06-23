@@ -1,4 +1,4 @@
 sqlalchemy==2.0.16
 matplotlib==3.7.1
 nltk==3.8.1
-worldcloud==1.9.2
+worldcloud==1.7.0
