@@ -17,8 +17,8 @@ st.title("Vagas para Devs")
 description = st.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)', key='desc')
 location = st.text_input('Localização', key='loc')
 
-# Lista para armazenar as vagas favoritas
-fav_jobs = []
+# Configuração de estado da sessão
+state = SessionState.get(fav_jobs=[])
 
 # Adicionar botão de buscar
 if st.button('Buscar'):
