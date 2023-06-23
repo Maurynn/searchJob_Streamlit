@@ -8,7 +8,7 @@ st.set_page_config(page_title="Vagas para Devs", layout='wide')
 # Configuração da API do Adzuna
 API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
 API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pela sua chave de API
-APP_ID = "d0210377 # substitua pelo seu App ID
+APP_ID = "d0210377" # substitua pelo seu App ID
 
 # Título do aplicativo
 st.title("Vagas para Devs")
