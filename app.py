@@ -1,29 +1,5 @@
-
-
 import streamlit as st
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, Column, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
 import requests
-
-# Configuração do SQLAlchemy
-Base = declarative_base()
-engine = create_engine('sqlite:///jobs.db')
-
-class Job(Base):
-    __tablename__ = 'jobs'
-
-    id = Column(Integer, primary_key=True)
-    title = Column(String(200))
-    company = Column(String(200))
-    location = Column(String(200))
-    description = Column(Text)
-    url = Column(String(300))
-
-Base.metadata.create_all(engine)
-
-# Criar uma sessão
-session = Session(engine)
 
 # Título do aplicativo
 st.sidebar.title("Vagas para Devs")
@@ -33,11 +9,12 @@ st.sidebar.header("Filtros de busca")
 description = st.sidebar.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
 location = st.sidebar.text_input('Localização')
 
+# Inicializar o estado da sessão para as vagas salvas
+if "saved_jobs" not in st.session_state:
+    st.session_state.saved_jobs = []
+
 # Adicionar botão de buscar
 if st.sidebar.button('Buscar'):
-    # Carregar as vagas salvas
-    saved_jobs = session.query(Job).all()
-
     # Configuração da API do Adzuna
     API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
     API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
@@ -46,7 +23,7 @@ if st.sidebar.button('Buscar'):
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': 25,
+        'results_per_page': 50,
         'what': description,
         'where': location
     }
@@ -63,7 +40,7 @@ if st.sidebar.button('Buscar'):
         # Exibir as vagas de emprego
         for i, job in enumerate(jobs):
             # Verificar se a vaga está salva
-            if job["id"] in [j.id for j in saved_jobs]:
+            if job["id"] in [j['id'] for j in st.session_state.saved_jobs]:
                 save_button_text = "Vaga salva"
             else:
                 save_button_text = "Salvar vaga"
@@ -76,17 +53,20 @@ if st.sidebar.button('Buscar'):
                 st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
                 if st.button(save_button_text, key=f'save_button_{i}'):
                     # Adicionar a vaga aos favoritos
-                    new_job = Job(id=job["id"], title=job["title"], company=job['company']['display_name'], location=job["location"]["display_name"], description=job["description"], url=job['redirect_url'])
-                    session.add(new_job)
-                    session.commit()
+                    st.session_state.saved_jobs.append(job)
 
-        # Seção para exibir as vagas salvas
-        st.sidebar.header("Vagas salvas")
-        for job in saved_jobs:
-            st.sidebar.subheader(job.title)
-            st.sidebar.write(job.company)
-            st.sidebar.write(job.location)
-            st.sidebar.markdown(f"[Ver detalhes da vaga]({job.url})")
+# Seção para exibir as vagas salvas
+st.sidebar.header("Vagas salvas")
+for job in st.session_state.saved_jobs:
+    st.sidebar.subheader(job['title'])
+    st.sidebar.write(job['company']['display_name'])
+    st.sidebar.write(job['location']['display_name'])
+    st.sidebar.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
 
-# Fechar a sessão
-session.close()
+
+
+
+
+ "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
+    API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
+    APP_ID = "d0210377" # substitua pelo seu 
