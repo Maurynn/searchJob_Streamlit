@@ -41,8 +41,8 @@ params = {
     'where': location
 }
 
-    # Fazer a requisição para a API do Adzuna com os parâmetros de busca
-    response = requests.get(API_URL, params=params)
+# Fazer a requisição para a API do Adzuna com os parâmetros de busca
+response = requests.get(API_URL, params=params)
 
     # Verificar se a requisição foi bem-sucedida
     if response.status_code == 200:
