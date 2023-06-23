@@ -35,14 +35,14 @@ if st.sidebar.button('Buscar'):
     saved_jobs = session.query(Job).all()
 
     # Configuração da API do Adzuna
-    API_URL = "https://api.adzuna.com/v1/api/jobs/{country}/search/1" # substitua {br} pelo código do país
+    API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {br} pelo código do país
     API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
     APP_ID = "d0210377" # substitua pelo seu App ID
 
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': 50,  # Aumente este número para obter mais resultados
+        'results_per_page': 20,  # Aumente este número para obter mais resultados
         'what': description,
         'where': location
     }
