@@ -1,1 +1,2 @@
 sqlalchemy==2.0.16
+matplolib==3.7.1
