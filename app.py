@@ -22,16 +22,24 @@ search_description, search_location = st.columns(2)
 description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
 location = search_location.text_input('Localização')
 
+page_number = st.empty()  # Este é um placeholder que atualizará o número da página
+jobs_container = st.empty()  # Este é um placeholder que irá mostrar os trabalhos
+
 # Adicionar botão de buscar
 if st.button('Buscar'):
+    page_number.number_input('Página', min_value=1, value=1, step=1)
 
-    params = {
-        'app_id': APP_ID,
-        'app_key': API_KEY,
-        'results_per_page': 15,
-        'what': description,
-        'where': location
-    }
+# Este botão será ativado quando o número da página mudar
+if st.button('Mostrar mais'):
+    page_number.number_input('Página', min_value=1, value=page_number.number_input + 1, step=1)
+
+params = {
+    'app_id': APP_ID,
+    'app_key': API_KEY,
+    'results_per_page': 20,
+    'what': description,
+    'where': location
+}
 
     # Fazer a requisição para a API do Adzuna com os parâmetros de busca
     response = requests.get(API_URL, params=params)
