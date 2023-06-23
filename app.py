@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 import json
-import SessionState
+import sessionstate
 
 st.set_page_config(page_title="Vagas para Devs", layout='wide')
 
