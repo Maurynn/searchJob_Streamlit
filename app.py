@@ -1,3 +1,5 @@
+
+
 import streamlit as st
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, Column, Integer, String, Text
@@ -13,8 +15,10 @@ class Job(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String(200))
+    company = Column(String(200))
     location = Column(String(200))
     description = Column(Text)
+    url = Column(String(300))
 
 Base.metadata.create_all(engine)
 
@@ -22,7 +26,7 @@ Base.metadata.create_all(engine)
 session = Session(engine)
 
 # Título do aplicativo
-st.title("VAGAS PARA DEVS")
+st.sidebar.title("Vagas para Devs")
 
 # Criar campos para os filtros de busca na barra lateral
 st.sidebar.header("Filtros de busca")
@@ -35,14 +39,14 @@ if st.sidebar.button('Buscar'):
     saved_jobs = session.query(Job).all()
 
     # Configuração da API do Adzuna
-    API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {br} pelo código do país
+    API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
     API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
     APP_ID = "d0210377" # substitua pelo seu App ID
 
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': 20,  # Aumente este número para obter mais resultados
+        'results_per_page': 25,
         'what': description,
         'where': location
     }
@@ -64,16 +68,15 @@ if st.sidebar.button('Buscar'):
             else:
                 save_button_text = "Salvar vaga"
             
-            # Criar um contêiner para cada vaga de emprego
-            with st.container():
-                st.header(job["title"])
-                st.text(f"Empresa: {job['company']['display_name']}")
+            # Criar uma seção expansível para cada vaga de emprego
+            with st.beta_expander(job["title"], expanded=True):
+                st.subheader(f"Empresa: {job['company']['display_name']}")
                 st.text(f"Localização: {job['location']['display_name']}")
                 st.text(job["description"])  # A descrição da vaga
                 st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
                 if st.button(save_button_text, key=f'save_button_{i}'):
                     # Adicionar a vaga aos favoritos
-                    new_job = Job(id=job["id"], title=job["title"], location=job["location"]["display_name"], description=job["description"])
+                    new_job = Job(id=job["id"], title=job["title"], company=job['company']['display_name'], location=job["location"]["display_name"], description=job["description"], url=job['redirect_url'])
                     session.add(new_job)
                     session.commit()
 
@@ -81,7 +84,9 @@ if st.sidebar.button('Buscar'):
         st.sidebar.header("Vagas salvas")
         for job in saved_jobs:
             st.sidebar.subheader(job.title)
+            st.sidebar.write(job.company)
             st.sidebar.write(job.location)
+            st.sidebar.markdown(f"[Ver detalhes da vaga]({job.url})")
 
 # Fechar a sessão
 session.close()
