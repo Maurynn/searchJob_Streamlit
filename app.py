@@ -14,7 +14,8 @@ API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
 APP_ID = "d0210377" # substitua pelo seu App ID
 
 # Título do aplicativo
-st.title("Vagas para Devs")
+st.markdown("<h1 style='text-align: center; color: blue;'>Vagas para Devs</h1>", unsafe_allow_html=True)
+
 
 # Criar campos para os filtros de busca
 search_description, search_location = st.columns(2)
