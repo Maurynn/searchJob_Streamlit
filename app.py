@@ -17,7 +17,7 @@ APP_ID = "d0210377" # substitua pelo seu App ID
 st.title("Vagas para Devs")
 
 # Criar campos para os filtros de busca
-search_description, search_location = st.beta_columns(2)
+search_description, search_location = st.columns(2)
 description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
 location = search_location.text_input('Localização')
 
