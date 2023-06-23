@@ -1,38 +1,31 @@
 import streamlit as st
+import pandas as pd
 import requests
+import json
+
+st.set_page_config(page_title="Vagas para Devs", layout='wide')
+
+# Configuração da API do Adzuna
+API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
+API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pela sua chave de API
+APP_ID = "d0210377 # substitua pelo seu App ID
 
 # Título do aplicativo
-st.sidebar.title("Vagas para Devs")
+st.title("Vagas para Devs")
 
-# Criar campos para os filtros de busca na barra lateral
-st.sidebar.header("Filtros de busca")
-description = st.sidebar.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
-location = st.sidebar.text_input('Localização')
+# Criar campos para os filtros de busca no topo da página
+description = st.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)', key='desc')
+location = st.text_input('Localização', key='loc')
 
-# Inicializar o estado da sessão para as vagas salvas
-if "saved_jobs" not in st.session_state:
-    st.session_state.saved_jobs = []
-
-# Adicionar link para ver vagas salvas
-if st.sidebar.button("Ver vagas salvas"):
-    for job in st.session_state.saved_jobs:
-        with st.expander(job['title']):
-            st.subheader(f"Empresa: {job['company']['display_name']}")
-            st.text(f"Localização: {job['location']['display_name']}")
-            st.write(job["description"])  # A descrição da vaga
-            st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
+# Lista para armazenar as vagas favoritas
+fav_jobs = []
 
 # Adicionar botão de buscar
-elif st.sidebar.button('Buscar'):
-    # Configuração da API do Adzuna
-    API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
-    API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
-    APP_ID = "d0210377" # substitua pelo seu App ID
-
+if st.button('Buscar'):
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': 50,
+        'results_per_page': 20,
         'what': description,
         'where': location
     }
@@ -46,20 +39,22 @@ elif st.sidebar.button('Buscar'):
         data = response.json()
         jobs = data['results']
 
-        # Exibir as vagas de emprego
-        for i, job in enumerate(jobs):
-            # Verificar se a vaga está salva
-            if job["id"] in [j['id'] for j in st.session_state.saved_jobs]:
-                save_button_text = "Vaga salva"
-            else:
-                save_button_text = "Salvar vaga"
-            
+        for job in jobs:
             # Criar uma seção expansível para cada vaga de emprego
             with st.expander(job["title"], expanded=True):
-                st.subheader(f"Empresa: {job['company']['display_name']}")
-                st.text(f"Localização: {job['location']['display_name']}")
-                st.write(job["description"])  # A descrição da vaga
-                st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
-                if st.button(save_button_text, key=f'save_button_{i}'):
-                    # Adicionar a vaga aos favoritos
-                    st.session_state.saved_jobs.append(job)
+                # Exibir detalhes da vaga
+                st.text(job["description"])
+                st.text("Localização: " + job["location"]["display_name"])
+                st.text("Empresa: " + job["company"]["display_name"])
+                st.text("URL da vaga: " + job["redirect_url"])
+                
+                # Adicionar botão para salvar vaga
+                if st.button("Salvar vaga", key=job["id"]):
+                    fav_jobs.append(job)
+                    st.success("Vaga salva com sucesso!")
+
+# Seção para exibir as vagas salvas
+st.sidebar.header("Vagas salvas")
+for job in fav_jobs:
+    st.sidebar.subheader(job["title"])
+    st.sidebar.write(job["location"]["display_name"])
