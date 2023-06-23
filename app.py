@@ -43,10 +43,10 @@ if st.button('Buscar'):
             # Criar uma seção expansível para cada vaga de emprego
             with st.expander(job["title"], expanded=True):
                 # Exibir detalhes da vaga
-                st.text(job["description"])
+                st.write(job["description"])
                 st.text("Localização: " + job["location"]["display_name"])
                 st.text("Empresa: " + job["company"]["display_name"])
-                st.text("URL da vaga: " + job["redirect_url"])
+                st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
                 
                 # Adicionar botão para salvar vaga
                 if st.button("Salvar vaga", key=job["id"]):
