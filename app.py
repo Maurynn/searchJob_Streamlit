@@ -27,7 +27,7 @@ session = Session(engine)
 st.title("Vagas para Devs")
 
 # Criar campos para os filtros de busca
-search_description, search_location = st.beta_columns(2)
+search_description, search_location = st.columns(2)
 description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
 location = search_location.text_input('Localização')
 
@@ -67,7 +67,7 @@ if st.button('Buscar'):
                 save_button_text = "Salvar vaga"
             
             # Criar uma seção expansível para cada vaga de emprego
-            with st.beta_expander(job["title"], expanded=True):
+            with st.expander(job["title"], expanded=True):
                 st.subheader(f"Empresa: {job['company']['display_name']}")
                 st.text(f"Localização: {job['location']['display_name']}")
                 st.text(job["description"])  # A descrição da vaga
@@ -81,7 +81,7 @@ if st.button('Buscar'):
         # Seção para exibir as vagas salvas
         st.header("Vagas salvas")
         for job in saved_jobs:
-            with st.beta_expander(job.title, expanded=False):
+            with st.expander(job.title, expanded=False):
                 st.subheader(f"Empresa: {job.company}")
                 st.text(f"Localização: {job.location}")
                 st.text(job.description)
