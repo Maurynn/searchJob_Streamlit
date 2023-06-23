@@ -13,8 +13,17 @@ location = st.sidebar.text_input('Localização')
 if "saved_jobs" not in st.session_state:
     st.session_state.saved_jobs = []
 
+# Adicionar link para ver vagas salvas
+if st.sidebar.button("Ver vagas salvas"):
+    for job in st.session_state.saved_jobs:
+        with st.expander(job['title']):
+            st.subheader(f"Empresa: {job['company']['display_name']}")
+            st.text(f"Localização: {job['location']['display_name']}")
+            st.write(job["description"])  # A descrição da vaga
+            st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
+
 # Adicionar botão de buscar
-if st.sidebar.button('Buscar'):
+elif st.sidebar.button('Buscar'):
     # Configuração da API do Adzuna
     API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
     API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
@@ -49,16 +58,15 @@ if st.sidebar.button('Buscar'):
             with st.expander(job["title"], expanded=True):
                 st.subheader(f"Empresa: {job['company']['display_name']}")
                 st.text(f"Localização: {job['location']['display_name']}")
-                st.text(job["description"])  # A descrição da vaga
+                st.write(job["description"])  # A descrição da vaga
                 st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
                 if st.button(save_button_text, key=f'save_button_{i}'):
                     # Adicionar a vaga aos favoritos
                     st.session_state.saved_jobs.append(job)
 
-# Seção para exibir as vagas salvas
-st.sidebar.header("Vagas salvas")
-for job in st.session_state.saved_jobs:
-    st.sidebar.subheader(job['title'])
-    st.sidebar.write(job['company']['display_name'])
-    st.sidebar.write(job['location']['display_name'])
-    st.sidebar.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})") 
+
+
+    API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
+    APP_ID = "d0210377" # substitua pelo seu App ID
+
+   
