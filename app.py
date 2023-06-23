@@ -59,6 +59,7 @@ if st.button('Buscar'):
         fig, ax = plt.subplots()
         ax.bar(location_counts.keys(), location_counts.values())
         plt.xticks(rotation=90)
+        st.header('Gráfico das cidades com mais Vagas.')
         st.pyplot(fig)
 
         # Analisar as habilidades mais requisitadas nas descrições das vagas
