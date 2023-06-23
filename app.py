@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Placeholder for the job search section
-job_search_section = st.empty()
+job_search_section.tittle = st.empty()
 
 # Título do aplicativo
 st.title("Vagas para Devs")
