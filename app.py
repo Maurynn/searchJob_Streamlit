@@ -22,7 +22,7 @@ Base.metadata.create_all(engine)
 session = Session(engine)
 
 # Título do aplicativo
-st.title("Decola Juninho")
+st.title("VAGAS PARA DEVS")
 
 # Criar campos para os filtros de busca na barra lateral
 st.sidebar.header("Filtros de busca")
@@ -35,7 +35,7 @@ if st.sidebar.button('Buscar'):
     saved_jobs = session.query(Job).all()
 
     # Configuração da API do Adzuna
-    API_URL = "https://api.adzuna.com/v1/api/jobs/{country}/search/1" # substitua {country} pelo código do país
+    API_URL = "https://api.adzuna.com/v1/api/jobs/{country}/search/1" # substitua {br} pelo código do país
     API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
     APP_ID = "d0210377" # substitua pelo seu App ID
 
