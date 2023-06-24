@@ -10,8 +10,8 @@ nltk.download('stopwords')
 
 # Configuração da API do Adzuna
 API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
-API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
-APP_ID = "d0210377" # substitua pelo seu App ID
+API_KEY = "" # substitua pelo sua chave de API
+APP_ID = "" # substitua pelo seu App ID
 
 # Título do aplicativo
 st.markdown("<h1 style='text-align: center; color: cyan;'>Hey, Dev! 👨🏻‍💻 \nPROCURE SUA VAGA DE EMPREGO AQUI!</h1>", unsafe_allow_html=True)
