@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 import nltk
 from wordcloud import WordCloud
 from nltk.corpus import stopwords
-nltk.download('punkt')
-nltk.download('stopwords')
 
 st.set_page_config(
     page_title="Vagas para Devs",
@@ -21,6 +19,9 @@ st.set_page_config(
         "font":"sans-serif"
     }
 )
+
+nltk.download('punkt')
+nltk.download('stopwords')
 
 # Configuração da API do Adzuna
 API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
