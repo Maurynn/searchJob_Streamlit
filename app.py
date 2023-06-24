@@ -6,20 +6,6 @@ import nltk
 from wordcloud import WordCloud
 from nltk.corpus import stopwords
 
-st.set_page_config(
-    page_title="Vagas para Devs",
-    page_icon="👩‍💻",
-    layout="wide",
-    initial_sidebar_state="expanded",
-    theme={
-        "primaryColor":"#F63366",
-        "backgroundColor":"#FFFFFF",
-        "secondaryBackgroundColor":"#F0F2F6",
-        "textColor":"#262730",
-        "font":"sans-serif"
-    }
-)
-
 nltk.download('punkt')
 nltk.download('stopwords')
 
