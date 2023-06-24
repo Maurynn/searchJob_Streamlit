@@ -8,6 +8,20 @@ from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
 
+st.set_page_config(
+    page_title="Vagas para Devs",
+    page_icon="👩‍💻",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    theme={
+        "primaryColor":"#F63366",
+        "backgroundColor":"#FFFFFF",
+        "secondaryBackgroundColor":"#F0F2F6",
+        "textColor":"#262730",
+        "font":"sans-serif"
+    }
+)
+
 # Configuração da API do Adzuna
 API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
 API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API 
