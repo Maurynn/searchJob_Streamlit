@@ -22,29 +22,13 @@ search_description, search_location = st.columns(2)
 description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
 location = search_location.text_input('Localização')
 
-# Adicionar um seletor para o número de resultados por página
-results_per_page = st.sidebar.selectbox('Resultados por página', options=[10, 20, 50], index=1)
-
-# Adicionar um lugar para armazenar a página atual
-page = st.session_state.get('page', 1)
-
-# Adicionar botões de paginação
-prev_button, next_button = st.sidebar.columns(2)
-if prev_button.button('Anterior') and page > 1:
-    page -= 1
-    st.session_state.page = page
-if next_button.button('Próximo'):
-    page += 1
-    st.session_state.page = page
-
 # Adicionar botão de buscar
 if st.button('Buscar'):
 
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': results_per_page,
-        'page': page,
+        'results_per_page': 15,
         'what': description,
         'where': location
     }
@@ -57,6 +41,10 @@ if st.button('Buscar'):
         # Converter os dados da resposta para JSON
         data = response.json()
         jobs = data['results']
+        
+        if not jobs:
+            st.write("Nenhuma vaga encontrada.")
+            return
 
         # Analisar as habilidades mais requisitadas nas descrições das vagas
         descriptions = ' '.join([job["description"] for job in jobs])
@@ -91,6 +79,9 @@ if st.button('Buscar'):
         plt.xticks(rotation=90)
         st.markdown(f"<h4 style='text-align: left; color: white;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
         st.pyplot(fig)
+        
+    else:
+        st.write(f"Erro na solicitação: {response.status_code}")
 
 st.markdown("___")
 st.markdown("in development by Mauro Alves:")
