@@ -76,4 +76,4 @@ if st.button('Buscar'):
         st.pyplot(fig)
 
 st.markdown("___")
-st.markdown("Em Desenvolvimento por Mauro Alves")     
+st.markdown("in development by Mauro Alves:")     
