@@ -2,3 +2,4 @@ sqlalchemy==2.0.16
 matplotlib==3.7.1
 nltk==3.8.1
 wordcloud==1.9.2
+pygments==2.15.1
