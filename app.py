@@ -76,4 +76,4 @@ if st.button('Buscar'):
         st.pyplot(fig)
 
 st.markdown("\n\n\n___")
-st.markdown("Em Desenvolvimento por Mauro Alves")     
+st.markdown("\n\n\nEm Desenvolvimento por Mauro Alves")     
