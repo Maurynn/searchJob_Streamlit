@@ -10,9 +10,9 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 # Configuração da API do Adzuna
-API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" 
-API_KEY = "f2471fc865692b0445fa6efd1f65c765" 
-APP_ID = "d0210377" 
+API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1"
+API_KEY = "f2471fc865692b0445fa6efd1f65c765"
+APP_ID = "d0210377"
 
 # Título do aplicativo
 st.markdown("<h1 style='text-align: center; color: cyan;'>Hey, Dev! 👨🏻‍💻 PROCURE SUA VAGA DE EMPREGO AQUI! !</h1>", unsafe_allow_html=True)
@@ -57,7 +57,7 @@ if st.button('Buscar'):
         # Converter os dados da resposta para JSON
         data = response.json()
         jobs = data['results']
-        
+
         # Analisar as habilidades mais requisitadas nas descrições das vagas
         descriptions = ' '.join([job["description"] for job in jobs])
         tokens = nltk.word_tokenize(descriptions)
@@ -92,8 +92,5 @@ if st.button('Buscar'):
         st.markdown(f"<h4 style='text-align: left; color: white;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
         st.pyplot(fig)
 
-    # Atualizar o estado da sessão para a página atual
-    st.session_state.page = page
-
 st.markdown("___")
-st.markdown("in development by Mauro Alves:")   
+st.markdown("in development by Mauro Alves:")
