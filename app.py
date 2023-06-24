@@ -75,5 +75,4 @@ if st.button('Buscar'):
         st.markdown(f"<h4 style='text-align: left; color: whyte;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
 
         st.pyplot(fig)
-
-        
+st.footer("Em Desenvolvimento por Mauro Alves"      
