@@ -72,7 +72,7 @@ if st.button('Buscar'):
         fig, ax = plt.subplots()
         ax.bar(location_counts.keys(), location_counts.values())
         plt.xticks(rotation=90)
-        st.markdown(f"<h2 style='text-align: center; color: cyan;'>Vagas de Dev {description} por cidade!</h2>", unsafe_allow_html=True)
+        st.header(f"<h2 style='text-align: center; color: cyan;'>Vagas de Dev {description} por cidade!</h2>", unsafe_allow_html=True)
 
         st.pyplot(fig)
 
