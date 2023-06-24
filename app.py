@@ -33,7 +33,7 @@ if st.button('Buscar'):
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': 15,
+        'results_per_page': 10,
         'what': description,
         'where': location
     }
