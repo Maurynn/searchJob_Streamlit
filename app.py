@@ -72,6 +72,8 @@ if st.button('Buscar'):
         fig, ax = plt.subplots()
         ax.bar(location_counts.keys(), location_counts.values())
         plt.xticks(rotation=90)
+        st.header(f'Cidades com mais Vagas para Dev {description}')
+
         st.pyplot(fig)
 
         
