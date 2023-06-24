@@ -75,5 +75,8 @@ if st.button('Buscar'):
         st.markdown(f"<h4 style='text-align: left; color: whyte;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
         st.pyplot(fig)
 
+for _ in range(20):
+    st.markdown("<br>", unsafe_allow_html=True)
+
 st.markdown("___")
 st.markdown("Em Desenvolvimento por Mauro Alves")     
