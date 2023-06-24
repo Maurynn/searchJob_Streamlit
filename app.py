@@ -10,17 +10,32 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 # Configuração da API do Adzuna
-API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
-API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API 
-APP_ID = "d0210377" # substitua pelo seu App ID
+API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" 
+API_KEY = "f2471fc865692b0445fa6efd1f65c765" 
+APP_ID = "d0210377" 
+
 # Título do aplicativo
 st.markdown("<h1 style='text-align: center; color: cyan;'>Hey, Dev! 👨🏻‍💻 PROCURE SUA VAGA DE EMPREGO AQUI! !</h1>", unsafe_allow_html=True)
-
 
 # Criar campos para os filtros de busca
 search_description, search_location = st.columns(2)
 description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
 location = search_location.text_input('Localização')
+
+# Adicionar um seletor para o número de resultados por página
+results_per_page = st.sidebar.selectbox('Resultados por página', options=[10, 20, 50], index=1)
+
+# Adicionar um lugar para armazenar a página atual
+page = st.session_state.get('page', 1)
+
+# Adicionar botões de paginação
+prev_button, next_button = st.sidebar.columns(2)
+if prev_button.button('Anterior') and page > 1:
+    page -= 1
+    st.session_state.page = page
+if next_button.button('Próximo'):
+    page += 1
+    st.session_state.page = page
 
 # Adicionar botão de buscar
 if st.button('Buscar'):
@@ -28,7 +43,8 @@ if st.button('Buscar'):
     params = {
         'app_id': APP_ID,
         'app_key': API_KEY,
-        'results_per_page': 15,
+        'results_per_page': results_per_page,
+        'page': page,
         'what': description,
         'where': location
     }
@@ -73,8 +89,11 @@ if st.button('Buscar'):
         fig, ax = plt.subplots()
         ax.bar(location_counts.keys(), location_counts.values())
         plt.xticks(rotation=90)
-        st.markdown(f"<h4 style='text-align: left; color: whyte;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
+        st.markdown(f"<h4 style='text-align: left; color: white;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
         st.pyplot(fig)
 
+    # Atualizar o estado da sessão para a página atual
+    st.session_state.page = page
+
 st.markdown("___")
-st.markdown("in development by Mauro Alves:")     
+st.markdown("in development by Mauro Alves:")   
