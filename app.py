@@ -10,17 +10,22 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 # Configuração da API do Adzuna
-API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1"
-API_KEY = "f2471fc865692b0445fa6efd1f65c765"
-APP_ID = "d0210377"
+API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/{page}" # substitua {page} pelo número da página
+API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API 
+APP_ID = "d0210377" # substitua pelo seu App ID
+
+# Configuração inicial
+page = 1
+description = ''
+location = ''
 
 # Título do aplicativo
-st.markdown("<h1 style='text-align: center; color: cyan;'>Hey, Dev! 👨🏻‍💻 PROCURE SUA VAGA DE EMPREGO AQUI! !</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: cyan;'>Hey, Dev! 👨🏻‍💻 PROCURE SUA VAGA DE- EMPREGO AQUI! !</h1>", unsafe_allow_html=True)
 
 # Criar campos para os filtros de busca
 search_description, search_location = st.columns(2)
-description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)')
-location = search_location.text_input('Localização')
+description = search_description.text_input('Descrição da vaga (por exemplo, Python, JavaScript, etc.)', description)
+location = search_location.text_input('Localização', location)
 
 # Adicionar botão de buscar
 if st.button('Buscar'):
@@ -34,7 +39,7 @@ if st.button('Buscar'):
     }
 
     # Fazer a requisição para a API do Adzuna com os parâmetros de busca
-    response = requests.get(API_URL, params=params)
+    response = requests.get(API_URL.format(page=page), params=params)
 
     # Verificar se a requisição foi bem-sucedida
     if response.status_code == 200:
@@ -42,10 +47,6 @@ if st.button('Buscar'):
         data = response.json()
         jobs = data['results']
         
-        if not jobs:
-            st.write("Nenhuma vaga encontrada.")
-            return
-
         # Analisar as habilidades mais requisitadas nas descrições das vagas
         descriptions = ' '.join([job["description"] for job in jobs])
         tokens = nltk.word_tokenize(descriptions)
@@ -77,11 +78,16 @@ if st.button('Buscar'):
         fig, ax = plt.subplots()
         ax.bar(location_counts.keys(), location_counts.values())
         plt.xticks(rotation=90)
-        st.markdown(f"<h4 style='text-align: left; color: white;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
+        st.markdown(f"<h4 style='text-align: left; color: whyte;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
         st.pyplot(fig)
-        
-    else:
-        st.write(f"Erro na solicitação: {response.status_code}")
+
+        # Botões para a navegação de página
+        previous_button, next_button = st.columns(2)
+        if page > 1:
+            if previous_button.button('Anterior'):
+                page -= 1
+        if next_button.button('Próximo'):
+            page += 1
 
 st.markdown("___")
 st.markdown("in development by Mauro Alves:")
