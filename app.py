@@ -5,9 +5,6 @@ import matplotlib.pyplot as plt
 import nltk
 from wordcloud import WordCloud
 from nltk.corpus import stopwords
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -65,14 +62,10 @@ if st.button('Buscar'):
             with st.expander(job["title"], expanded=True):
                 # Verificar se a vaga possui informações da empresa
                 if 'company' in job and 'display_name' in job['company']:
-                    st.markdown(f"#### Empresa: {job['company']['display_name']}")
-                st.write(f"#### Localização: {job['location']['display_name']}")
-                # Usar o Pygments para realçar trechos de código na descrição da vaga
-                lexer = get_lexer_by_name("python")
-                formatter = HtmlFormatter(style='monokai')
-                description = highlight(job["description"], lexer, formatter)
-                st.markdown(description, unsafe_allow_html=True)
-                st.markdown(f"#### [Ver detalhes da vaga]({job['redirect_url']})")
+                    st.subheader(f"Empresa: {job['company']['display_name']}")
+                st.write(f"Localização: {job['location']['display_name']}")
+                st.write(job["description"])  # A descrição da vaga
+                st.markdown(f"[Ver detalhes da vaga]({job['redirect_url']})")
 
         # Analisar a distribuição das vagas por localização
         locations = [job['location']['display_name'] for job in jobs]
