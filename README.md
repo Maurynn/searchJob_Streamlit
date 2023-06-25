@@ -6,7 +6,7 @@ Este aplicativo foi desenvolvido para ajudar desenvolvedores na busca de vagas d
 # Características
 Pesquisa personalizada de vagas de emprego: Insira a descrição da vaga e a localização para encontrar oportunidades de emprego que correspondam ao seu perfil.
 
-# Visualização de habilidades mais requisitadas: Com base nos resultados da pesquisa, o app gera um gráfico de nuvem de palavras mostrando as habilidades mais requisitadas nas descrições das vagas.
+Visualização de habilidades mais requisitadas: Com base nos resultados da pesquisa, o app gera um gráfico de nuvem de palavras mostrando as habilidades mais requisitadas nas descrições das vagas.
 
 # Destaque de vagas de emprego: Cada vaga de emprego é apresentada em um layout de cartão, com informações detalhadas sobre a empresa e a descrição da vaga. A descrição da vaga é realçada utilizando a biblioteca Pygments, facilitando a identificação de trechos de código e tecnologias relevantes.
 
