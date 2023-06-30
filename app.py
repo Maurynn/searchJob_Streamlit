@@ -15,7 +15,7 @@ API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API
 APP_ID = "d0210377" # substitua pelo seu App ID
 # Título do aplicativo
 st.markdown("<h1 style='text-align: center; color: cyan;'>Hey, Dev! 👨🏻‍💻 PROCURE SUA VAGA DE EMPREGO AQUI!</h1>", unsafe_allow_html=True)
-
+st.divider()
 
 # Criar campos para os filtros de busca
 search_description, search_location = st.columns(2)
@@ -76,5 +76,5 @@ if st.button('Buscar'):
         st.markdown(f"<h4 style='text-align: left; color: whyte;'>Vagas de Dev {description} por cidade!</h4>", unsafe_allow_html=True)
         st.pyplot(fig)
 
-st.markdown("___")
-st.markdown("in development by Mauro Alves:")
+st.divider()
+st.markdown("Developed by: Mauro Alves")
