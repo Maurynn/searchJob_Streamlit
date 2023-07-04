@@ -9,6 +9,9 @@ from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
 
+# Configuração da página
+st.set_page_config(layout="wide")
+
 # Configuração da API do Adzuna
 API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
 API_KEY = "f2471fc865692b0445fa6efd1f65c765" # substitua pelo sua chave de API 
