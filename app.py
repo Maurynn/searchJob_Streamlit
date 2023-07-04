@@ -10,7 +10,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 # Configuração da página
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 # Configuração da API do Adzuna
 API_URL = "https://api.adzuna.com/v1/api/jobs/br/search/1" # substitua {country} pelo código do país
